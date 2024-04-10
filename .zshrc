@@ -1,3 +1,7 @@
+## =========================================
+## Setup zsh
+## =========================================
+
 autoload -Uz compinit && compinit
 
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -18,18 +22,23 @@ zinit snippet OMZP::command-not-found
 zinit snippet OMZP::common-aliases
 zinit snippet OMZP::git
 zinit snippet OMZP::golang
-zinit snippet OMZP::pnpm
 zinit snippet OMZP::yarn
 
+zinit light ntnyq/omz-plugin-pnpm
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 
-# User configuration
+## =========================================
+## User configuration
+## =========================================
 
 # You may need to manually set your language environment
 export LANG=en_NG.UTF-8
 export LC_ALL=en_NG.UTF-8
+
+# Add .local/bin to path
+export PATH="$HOME/.local/bin:$PATH"
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -41,9 +50,6 @@ export LC_ALL=en_NG.UTF-8
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-## Default paths
-export PATH="$HOME/.local/bin:$PATH"
 
 ## Startship prompt
 eval "$(starship init zsh)"
