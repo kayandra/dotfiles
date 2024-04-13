@@ -24,6 +24,7 @@ zinit snippet OMZP::git
 zinit snippet OMZP::golang
 zinit snippet OMZP::yarn
 
+zinit light ntnyq/omz-plugin-bun
 zinit light ntnyq/omz-plugin-pnpm
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
