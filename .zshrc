@@ -49,7 +49,9 @@ export PATH="$HOME/.local/bin:$PATH"
 # fi
 
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
+alias cat="batcat"
+alias ls="exa"
+alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 ## Startship prompt
@@ -76,3 +78,14 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+# Rust
+source "$HOME/.cargo/env"
+
+# SUI
+export PATH=$PATH:~/sui
+alias sui-prover="docker-compose -f ~/workspace/prover/compose.yaml up"
+
+# Fly.io
+export FLYCTL_INSTALL="$HOME/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
