@@ -54,7 +54,7 @@ alias ls="exa"
 alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-## Startship prompt
+## Starship prompt
 eval "$(starship init zsh)"
 
 ## zoxide
@@ -66,6 +66,9 @@ eval "$(fnm env --use-on-cd)"
 
 # Golang
 export PATH=$PATH:/usr/local/go/bin
+
+# Zig
+export PATH=$PATH:/usr/local/zig
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
@@ -89,3 +92,5 @@ alias sui-prover="docker-compose -f ~/workspace/prover/compose.yaml up"
 # Fly.io
 export FLYCTL_INSTALL="$HOME/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
