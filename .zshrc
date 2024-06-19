@@ -66,6 +66,7 @@ eval "$(fnm env --use-on-cd)"
 
 # Golang
 export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$HOME/go/bin
 
 # Zig
 export PATH=$PATH:/usr/local/zig
@@ -92,5 +93,8 @@ alias sui-prover="docker-compose -f ~/workspace/prover/compose.yaml up"
 # Fly.io
 export FLYCTL_INSTALL="$HOME/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+## kitty
+export TERM=xterm-256color
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
