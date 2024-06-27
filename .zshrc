@@ -49,10 +49,10 @@ export PATH="$HOME/.local/bin:$PATH"
 # fi
 
 ## Example aliases
-alias cat="batcat"
 alias ls="exa"
-alias zshconfig="mate ~/.zshrc"
-## alias ohmyzsh="mate ~/.oh-my-zsh"
+alias cd="z"
+alias cat="batcat"
+alias zrc="vim ~/.zshrc"
 
 ## Homebrew
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
@@ -60,8 +60,15 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 ## Starship prompt
 eval "$(starship init zsh)"
 
-## zoxide
-eval "$(zoxide init --cmd cd zsh)"
+## z with fzf
+if [ -d .completions.d ]; then
+  for file in .completions.d/*; do
+    . $file
+  done
+fi
+
+# ## zoxide
+# eval "$(zoxide init --cmd cd zsh)"
 
 ## fzf
 source <(fzf --zsh)
