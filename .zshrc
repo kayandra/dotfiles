@@ -38,7 +38,7 @@ zinit light zsh-users/zsh-syntax-highlighting
 export LANG=en_NG.UTF-8
 export LC_ALL=en_NG.UTF-8
 
-# Add .local/bin to path
+## Add .local/bin to path
 export PATH="$HOME/.local/bin:$PATH"
 
 # Preferred editor for local and remote sessions
@@ -48,11 +48,14 @@ export PATH="$HOME/.local/bin:$PATH"
 #   export EDITOR='mvim'
 # fi
 
-# Example aliases
+## Example aliases
 alias cat="batcat"
 alias ls="exa"
 alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+## alias ohmyzsh="mate ~/.oh-my-zsh"
+
+## Homebrew
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 ## Starship prompt
 eval "$(starship init zsh)"
@@ -60,41 +63,43 @@ eval "$(starship init zsh)"
 ## zoxide
 eval "$(zoxide init --cmd cd zsh)"
 
-# fnm
+## fzf
+source <(fzf --zsh)
+export FZF_DEFAULT_OPTS='--layout reverse --border top --inline-info'
+
+## fnm
 export PATH="$HOME/.local/share/fnm:$PATH"
 eval "$(fnm env --use-on-cd)"
 
-# Golang
+## Golang
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
 
-# Zig
+## Zig
 export PATH=$PATH:/usr/local/zig
 
-# bun completions
+## bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-# bun
+## bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# Android
+## Android
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 
-# Rust
+## Rust
 source "$HOME/.cargo/env"
 
-# SUI
+## SUI
 export PATH=$PATH:~/sui
 alias sui-prover="docker-compose -f ~/workspace/prover/compose.yaml up"
 
-# Fly.io
+## Fly.io
 export FLYCTL_INSTALL="$HOME/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
 ## kitty
 export TERM=xterm-256color
-
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
