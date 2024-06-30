@@ -64,7 +64,8 @@ eval "$(zoxide init --cmd cd zsh)"
 
 ## fzf
 source <(fzf --zsh)
-export FZF_DEFAULT_OPTS='--layout reverse --border top --inline-info'
+export FZF_DEFAULT_OPTS="--layout reverse --inline-info"
+#  --preview 'batcat --style=numbers --color=always {}'"
 
 ## fnm
 export PATH="$HOME/.local/share/fnm:$PATH"
