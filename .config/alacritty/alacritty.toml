@@ -1,0 +1,74 @@
+[colors.primary]
+background = '#2c2c2c'
+foreground = '#d6d6d6'
+
+dim_foreground = '#dbdbdb'
+bright_foreground = '#d9d9d9'
+
+# Cursor colors
+[colors.cursor]
+text = '#2c2c2c'
+cursor = '#d9d9d9'
+
+# Normal colors
+[colors.normal]
+black = '#1c1c1c'
+red = '#bc5653'
+green = '#909d63'
+yellow = '#ebc17a'
+blue = '#7eaac7'
+magenta = '#aa6292'
+cyan = '#86d3ce'
+white = '#cacaca'
+
+# Bright colors
+[colors.bright]
+black = '#636363'
+red = '#bc5653'
+green = '#909d63'
+yellow = '#ebc17a'
+blue = '#7eaac7'
+magenta = '#aa6292'
+cyan = '#86d3ce'
+white = '#f7f7f7'
+
+# Dim colors
+[colors.dim]
+black = '#232323'
+red = '#74423f'
+green = '#5e6547'
+yellow = '#8b7653'
+blue = '#556b79'
+magenta = '#6e4962'
+cyan = '#5c8482'
+white = '#828282'
+
+
+[font.normal]
+family = "Sligoil"
+style = "Regular"
+
+[font]
+size = 18.00
+builtin_box_drawing = true
+
+[window]
+startup_mode = "Maximized"
+dynamic_padding = true
+opacity = 0.85
+blur = true
+dynamic_title = true
+title = "Alacritty"
+
+[window.padding]
+x = 20
+y = 20
+
+[[hints.enabled]]
+command = "xdg-open"
+hyperlinks = true
+post_processing = true
+persist = false
+mouse.enabled = true
+binding = { key = "U", mods = "Control|Shift" }
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
