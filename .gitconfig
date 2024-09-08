@@ -1,10 +1,18 @@
-[user]
-	name = kayandra
-	email = 5002506+kayandra@users.noreply.github.com
 [init]
-	defaultBranch = master
+defaultBranch = master
+
+[user]
+name = kayandra
+email = 5002506+kayandra@users.noreply.github.com
+
+[core]
+pager = delta
+
+[interactive]
+diffFilter = delta --color-only --features=interactive
+
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+clean = git-lfs clean -- %f
+smudge = git-lfs smudge -- %f
+process = git-lfs filter-process
+required = true

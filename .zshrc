@@ -103,3 +103,12 @@ export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
 ## kitty
 export TERM=xterm-256color
+
+## Encore
+export ENCORE_INSTALL="/home/batcave/.encore"
+export PATH="$ENCORE_INSTALL/bin:$PATH"
+
+### ===================================================================
+### Place at ending
+### ===================================================================
+alias lt="$FNM_MULTISHELL_PATH/bin/lt"
