@@ -75,43 +75,8 @@ eval "$(zoxide init --cmd cd zsh)"
 source <(fzf --zsh)
 export FZF_DEFAULT_OPTS="--layout reverse --inline-info"
 
-## Golang
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:$HOME/go/bin
-
-## bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-## bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
 ## fnm
-export PATH="$HOME/.local/share/fnm:$PATH"
 eval "$(fnm env --use-on-cd)"
-
-## Rust
-source "$HOME/.cargo/env"
-
-## Zig
-export PATH=$PATH:/usr/local/zig
-
-## Fly.io
-export FLYCTL_INSTALL="$HOME/.fly"
-export PATH="$FLYCTL_INSTALL/bin:$PATH"
-
-## =========================================
-## Extras - May or may not be installed
-## =========================================
-
-## Android
-export ANDROID_HOME=$ANDROID_HOME
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-
-## Encore
-export ENCORE_INSTALL="$HOME/.encore"
-export PATH="$ENCORE_INSTALL/bin:$PATH"
 
 ## =========================================
 ### Deferred

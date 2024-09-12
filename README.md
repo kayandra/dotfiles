@@ -8,28 +8,26 @@ Ensure you have the following installed on your system
 
 ### Git
 
-```
+```bash
 sudo apt install git
-```
-
-### Stow
-
-```
-sudo apt install stow
 ```
 
 ## Installation
 
 First, check out the dotfiles repo in your $HOME directory using git
 
-```
-cd ~
-git clone git@github.com:kayandra/dotfiles.git
-cd dotfiles
+```bash
+git clone git@github.com:kayandra/dotfiles.git ~/dotfiles
 ```
 
-then use GNU stow to create symlinks
+once in the dotfiles directory, run the bootstrap script;
 
+```bash
+chmod a+x bootstrap.sh
+./bootstrap.sh
 ```
-$ stow .
+
+<!--
 ```
+chsh -s /home/linuxbrew/.linuxbrew/bin/zsh
+``` -->

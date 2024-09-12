@@ -1,168 +1,149 @@
 #!/usr/bin/env bash
 
-declare -a brew_packages=(
-	"curl"
-	"curl"
-	"cmake"
-	"gcc"
-	"libssl3"
-	"libssl-dev"
-	"pkg-config"
-	"libclang-dev"
-	"libpq-dev"
+declare -A brew_packages_to_package_tap
+
+required_apt_deps=(
 	"build-essential"
 	"software-properties-common"
-	"ffmpeg"
-	"libavcodec-extra"
+	"gnome-shell-extensions"
+	"gnome-tweaks"
+	"cosmic-store"
+)
+
+brew_packages_to_install=(
+	"zsh"
+	"grep"
+	"wget"
 	"stow"
-	"alien"
-	"alacarte"
-	"bat"
-	"exa"
 	"git"
 	"git-lfs"
+	"gcc"
+	"cmake"
+	"pkg-config"
+	"ffmpeg"
+	"starship"
+	"cloc"
+	"ssh-copy-id"
+	"tree"
+	"bat"
+	"eza"
+	"zoxide"
 	"fzf"
-	"fakeroot"
-	"xorriso"
-	"libnvidia-encode1"
-	"gparted"
-	"ca-certificates"
+	"delta"
+	"flyctl"
+
+	# Programming languages
+	"go"
+	"fnm"
+	"rust"
+	"zig"
 )
 
-declare -a snap_packages=(
-	"slack"
+# Brew kegs to tap
+brew_packages_to_package_tap["bun"]="oven-sh/bun"
+
+# junk apt binaries to uninstall
+junk_deps_to_remove=(
+	"pop-shop"
 )
 
-declare -a flatpak_packages=(
-	"brave-browser"
-	"appimagelauncher"
-)
+###########################################################
+## Scripting starts here
+###########################################################
 
-install_brew_packages() {
-	for pkg in "${brew_packages[@]}"; do
-		if [ $(dpkg-query -W -f='${Status}' $pkg 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-			sudo apt --yes install $pkg
-		else
-			echo "${pkg} is already installed... skipping."
-		fi
-	done
+# Ensure we are in the dotfiles directory
+cd ~/dotfiles
+
+# Defer brew cleanup
+HOMEBREW_NO_INSTALL_CLEANUP=true
+
+# brew binary fullpath
+linuxbrew="/home/linuxbrew/.linuxbrew/bin/brew"
+
+# Helper functions
+is_apt_installed() {
+	[ $(dpkg-query -W -f='${Status}' $1 2>/dev/null | grep -c "ok installed") -eq 1 ]
 }
 
-install_brew_packages
+is_brew_installed() {
+	$brew list $1 &>/dev/null && true
+}
 
-# # install delta (git diffs)
-# # stow
-# # zsh
-# # ohmyzsh
-# # starship prompt
-# # exa
-# # batcat
-# # brew (linuxbrew)
-# # zoxide
-# # fzf
-# # fnm
-# # golang
-# # rust
-# # zig
-# # bun
-# # fly.io
+is_command_installed() {
+	command -v $1 &>/dev/null && true
+}
 
-# # Install command-line tools using Homebrew.
+liner() {
+	echo ">>> $1"
+}
 
-# # Make sure we’re using the latest Homebrew.
-# brew update
+# Install homebrew
+liner "configuring homebrew"
+if [ ! -f "$linuxbrew" ]; then
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
 
-# # Upgrade any already-installed formulae.
-# brew upgrade
+# Temporary brew alias
+if ! is_command_installed brew; then brew="$linuxbrew"; else brew="$(which brew)"; fi
 
-# # Save Homebrew’s installed location.
-# BREW_PREFIX=$(brew --prefix)
+# Install appimagelauncher
+liner "configuring appimagelauncher"
+if ! is_apt_installed appimagelauncher; then
+	sudo add-apt-repository -yes ppa:appimagelauncher-team/stable
+	sudo apt update
+	sudo apt install -yes appimagelauncher
+fi
 
-# # Install GNU core utilities (those that come with macOS are outdated).
-# # Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
-# brew install coreutils
-# ln -s "${BREW_PREFIX}/bin/gsha256sum" "${BREW_PREFIX}/bin/sha256sum"
+# Install font-manager
+liner "configuring font-manager"
+if ! is_apt_installed font-manager; then
+	sudo add-apt-repository -yes ppa:font-manager/staging
+	sudo apt update
+	sudo apt install -yes font-manager
+fi
 
-# # Install some other useful utilities like `sponge`.
-# brew install moreutils
-# # Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed.
-# brew install findutils
-# # Install GNU `sed`, overwriting the built-in `sed`.
-# brew install gnu-sed --with-default-names
-# # Install a modern version of Bash.
-# brew install bash
-# brew install bash-completion2
+# Install required apt dependencies
+for pkg in "${required_apt_deps[@]}"; do
+	liner "configuring $pkg"
+	if ! is_apt_installed $pkg; then
+		sudo apt install -yes $pkg
+	fi
+done
 
-# # Switch to using brew-installed bash as default shell
-# if ! fgrep -q "${BREW_PREFIX}/bin/bash" /etc/shells; then
-# 	echo "${BREW_PREFIX}/bin/bash" | sudo tee -a /etc/shells
-# 	chsh -s "${BREW_PREFIX}/bin/bash"
-# fi
+# Install brew casks
+for pkg in "${brew_packages_to_install[@]}"; do
+	liner "configuring $pkg"
+	if ! is_brew_installed $pkg; then
+		$brew install --force $pkg
+	fi
+done
 
-# # Install `wget` with IRI support.
-# brew install wget --with-iri
+# Install brew casks
+for key in ${!brew_packages_to_package_tap[@]}; do
+	liner "configuring $key"
+	if ! is_brew_installed $key; then
+		$brew tap ${arr[${key}]}
+		$brew install --force $key
+	fi
+done
 
-# # Install GnuPG to enable PGP-signing commits.
-# brew install gnupg
+# Remove junk binaries
+for pkg in "${junk_deps_to_remove[@]}"; do
+	liner "removing bloatware $pkg"
+	if is_apt_installed $pkg; then
+		sudo apt remove -yes $pkg
+	fi
+done
 
-# # Install more recent versions of some macOS tools.
-# brew install vim --with-override-system-vi
-# brew install grep
-# brew install openssh
-# brew install screen
-# brew install php
-# brew install gmp
+# Source brew binaries
+eval "$($brew shellenv)"
 
-# # Install font tools.
-# brew tap bramstein/webfonttools
-# brew install sfnt2woff
-# brew install sfnt2woff-zopfli
-# brew install woff2
+# Symlink dotfiles
+stow .
 
-# # Install some CTF tools; see https://github.com/ctfs/write-ups.
-# brew install aircrack-ng
-# brew install bfg
-# brew install binutils
-# brew install binwalk
-# brew install cifer
-# brew install dex2jar
-# brew install dns2tcp
-# brew install fcrackzip
-# brew install foremost
-# brew install hashpump
-# brew install hydra
-# brew install john
-# brew install knock
-# brew install netpbm
-# brew install nmap
-# brew install pngcheck
-# brew install socat
-# brew install sqlmap
-# brew install tcpflow
-# brew install tcpreplay
-# brew install tcptrace
-# brew install ucspi-tcp # `tcpserver` etc.
-# brew install xpdf
-# brew install xz
+# Use zsh as default shell
+grep -qxF "$(which zsh)" "/etc/shells" || sudo bash -c "echo $(which zsh) >> /etc/shells"
+chsh -s "$(which zsh)" "$(whoami)"
 
-# # Install other useful binaries.
-# brew install ack
-# #brew install exiv2
-# brew install git
-# brew install git-lfs
-# brew install gs
-# brew install imagemagick --with-webp
-# brew install lua
-# brew install lynx
-# brew install p7zip
-# brew install pigz
-# brew install pv
-# brew install rename
-# brew install rlwrap
-# brew install ssh-copy-id
-# brew install tree
-# brew install vbindiff
-# brew install zopfli
-
-# # Remove outdated versions from the cellar.
-# brew cleanup
+# Remove outdated versions from the cellar.
+$brew cleanup
