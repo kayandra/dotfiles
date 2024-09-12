@@ -11,8 +11,16 @@ pager = delta
 [interactive]
 diffFilter = delta --color-only --features=interactive
 
+[branch]
+sort = -committerdate # Show most recently changed branches first.
+
 [filter "lfs"]
 clean = git-lfs clean -- %f
 smudge = git-lfs smudge -- %f
 process = git-lfs filter-process
 required = true
+
+[color]
+# Use colors in Git commands that are capable of colored output when
+# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
+ui = auto

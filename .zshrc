@@ -7,8 +7,8 @@ autoload -Uz compinit && compinit
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 # Download Zinit, if it's not there yet
 if [ ! -d "$ZINIT_HOME" ]; then
-  mkdir -p "$(dirname $ZINIT_HOME)"
-  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+	mkdir -p "$(dirname $ZINIT_HOME)"
+	git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
 source "${ZINIT_HOME}/zinit.zsh"
@@ -31,10 +31,10 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 
 ## =========================================
-## User configuration
+## User Config
 ## =========================================
 
-# You may need to manually set your language environment
+# Prefer NG English and use UTF-8.
 export LANG=en_NG.UTF-8
 export LC_ALL=en_NG.UTF-8
 
@@ -42,16 +42,25 @@ export LC_ALL=en_NG.UTF-8
 export PATH="$HOME/.local/bin:$PATH"
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+export EDITOR="code"
 
-## Example aliases
-alias ls="exa"
-alias cat="batcat"
-alias zrc="vim ~/.zshrc"
+# Don’t clear the screen after quitting a manual page.
+export MANPAGER="less -X"
+
+## kitty
+export TERM=xterm-256color
+
+## =========================================
+## Aliases
+## =========================================
+
+alias ls="exa"     # fancy ls alternative
+alias cat="batcat" # fancy cat alternative
+alias zrc="$EDITOR ~/.zshrc"
+
+## =========================================
+## Custom stuffs
+## =========================================
 
 ## Homebrew
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
@@ -65,18 +74,10 @@ eval "$(zoxide init --cmd cd zsh)"
 ## fzf
 source <(fzf --zsh)
 export FZF_DEFAULT_OPTS="--layout reverse --inline-info"
-#  --preview 'batcat --style=numbers --color=always {}'"
-
-## fnm
-export PATH="$HOME/.local/share/fnm:$PATH"
-eval "$(fnm env --use-on-cd)"
 
 ## Golang
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
-
-## Zig
-export PATH=$PATH:/usr/local/zig
 
 ## bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
@@ -85,30 +86,34 @@ export PATH=$PATH:/usr/local/zig
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-## Android
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/platform-tools
+## fnm
+export PATH="$HOME/.local/share/fnm:$PATH"
+eval "$(fnm env --use-on-cd)"
 
 ## Rust
 source "$HOME/.cargo/env"
 
-## SUI
-export PATH=$PATH:~/sui
-alias sui-prover="docker-compose -f ~/workspace/prover/compose.yaml up"
+## Zig
+export PATH=$PATH:/usr/local/zig
 
 ## Fly.io
 export FLYCTL_INSTALL="$HOME/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
-## kitty
-export TERM=xterm-256color
+## =========================================
+## Extras - May or may not be installed
+## =========================================
+
+## Android
+export ANDROID_HOME=$ANDROID_HOME
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 ## Encore
-export ENCORE_INSTALL="/home/batcave/.encore"
+export ENCORE_INSTALL="$HOME/.encore"
 export PATH="$ENCORE_INSTALL/bin:$PATH"
 
-### ===================================================================
-### Place at ending
-### ===================================================================
-alias lt="$FNM_MULTISHELL_PATH/bin/lt"
+## =========================================
+### Deferred
+## =========================================
+alias lt="$FNM_MULTISHELL_PATH/bin/lt" ## this is necessary to override exa's `lt` alias
