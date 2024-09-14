@@ -149,4 +149,6 @@ if [ "$SHELL" != "$(which zsh)" ]; then
 fi
 
 # Remove outdated versions from the cellar.
+$brew update
+$brew upgrade
 $brew cleanup
