@@ -2,6 +2,7 @@
 
 homebrew_packages=(
 	"zsh"
+	"curl"
 	"grep"
 	"wget"
 	"stow"

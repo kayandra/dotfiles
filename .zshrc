@@ -39,7 +39,9 @@ export LANG=en_NG.UTF-8
 export LC_ALL=en_NG.UTF-8
 
 ## Add .local/bin to path
-export PATH="$HOME/.local/bin:$PATH"
+if [ -d "$HOME/.local/bin" ]; then
+	export PATH="$HOME/.local/bin:$PATH"
+fi
 
 # Preferred editor for local and remote sessions
 export EDITOR="code"
@@ -54,8 +56,8 @@ export TERM=xterm-256color
 ## Aliases
 ## =========================================
 
-alias ls="exa"     # fancy ls alternative
-alias cat="batcat" # fancy cat alternative
+alias ls="exa"  # fancy ls alternative
+alias cat="bat" # fancy cat alternative
 alias zrc="$EDITOR ~/.zshrc"
 
 ## =========================================

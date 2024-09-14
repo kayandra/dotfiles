@@ -1,0 +1,10 @@
+\.git
+\.gitignore
+
+^/README.*
+^/LICENSE.*
+^/COPYING
+
+^bootstrap.sh
+icons/
+installers/

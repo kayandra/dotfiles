@@ -26,8 +26,3 @@ once in the dotfiles directory, run the bootstrap script;
 chmod a+x bootstrap.sh
 ./bootstrap.sh
 ```
-
-<!--
-```
-chsh -s /home/linuxbrew/.linuxbrew/bin/zsh
-``` -->
