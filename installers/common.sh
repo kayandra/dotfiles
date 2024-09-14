@@ -15,5 +15,5 @@ is_command_installed() {
 }
 
 is_flatpak_installed() {
-	false
+	[ $(flatpak list --app | grep -c $1) -eq 1 ]
 }

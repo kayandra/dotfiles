@@ -6,6 +6,7 @@ apt_deps_to_install=(
 	"gnome-shell-extensions"
 	"gnome-tweaks"
 	"cosmic-store"
+	"flatpak"
 )
 
 apt_deps_to_remove=(
