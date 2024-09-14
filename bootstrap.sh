@@ -31,6 +31,7 @@ brew_packages_to_install=(
 	"fzf"
 	"delta"
 	"flyctl"
+	"trivy"
 
 	# Programming languages
 	"go"
@@ -140,10 +141,6 @@ eval "$($brew shellenv)"
 
 # Symlink dotfiles
 stow .
-
-# Use zsh as default shell
-grep -qxF "$(which zsh)" "/etc/shells" || sudo bash -c "echo $(which zsh) >> /etc/shells"
-chsh -s "$(which zsh)" "$(whoami)"
 
 # Remove outdated versions from the cellar.
 $brew cleanup
