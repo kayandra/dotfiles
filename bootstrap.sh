@@ -142,5 +142,11 @@ eval "$($brew shellenv)"
 # Symlink dotfiles
 stow .
 
+# Use zsh as default shell
+if [ "$SHELL" != "$(which zsh)" ]; then
+	grep -qxF "$(which zsh)" "/etc/shells" || sudo bash -c "echo $(which zsh) >> /etc/shells"
+	chsh -s "$(which zsh)" "$(whoami)"
+fi
+
 # Remove outdated versions from the cellar.
 $brew cleanup
