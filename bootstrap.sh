@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 # todo: install vscode. can't use flatpak due to isolation affecting apc extension
-# todo: install docker-desktop
 # todo: set blackbox as default terminal
+# todo: switch back to kitty, and add installation steps for it
+# todo: docker-desktop https://medium.com/@selvamraju007/how-to-install-docker-desktop-on-ubuntu-22-04-1ebe4b2f8a14
+# todo: tableplus
 
 set -e
 

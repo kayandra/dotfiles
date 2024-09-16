@@ -9,7 +9,7 @@ Ensure you have the following installed on your system
 ### Git
 
 ```bash
-sudo apt install git
+sudo apt install --yes git
 ```
 
 ## Installation
