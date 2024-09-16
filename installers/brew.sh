@@ -23,6 +23,7 @@ homebrew_packages=(
 	"delta"
 	"flyctl"
 	"trivy"
+	"k6"
 
 	# Programming languages
 	"go"

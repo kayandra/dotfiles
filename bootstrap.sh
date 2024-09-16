@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# todo: install vscode
+# todo: install vscode. can't use flatpak due to isolation affecting apc extension
 # todo: install docker-desktop
 # todo: set blackbox as default terminal
 
