@@ -29,6 +29,7 @@ homebrew_packages=(
 	"go"
 	"fnm"
 	"rust"
+	"rustfmt"
 	"zig"
 )
 
