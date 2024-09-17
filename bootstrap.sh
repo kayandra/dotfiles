@@ -5,6 +5,7 @@
 # todo: switch back to kitty, and add installation steps for it
 # todo: docker-desktop https://medium.com/@selvamraju007/how-to-install-docker-desktop-on-ubuntu-22-04-1ebe4b2f8a14
 # todo: tableplus
+# todo: tunneling with warp, dns with nextdns, vpn with surfshark
 
 set -e
 
