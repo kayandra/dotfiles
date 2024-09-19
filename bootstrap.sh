@@ -44,6 +44,9 @@ eval "$($brewbin shellenv)"
 echo -e "\nStow dotfiles"
 stow .
 
+echo -e "\nModify .ssh folder"
+chmod 600 ~/.ssh/*
+
 echo -e "\nUse zsh as default shell"
 if [ "$SHELL" != "$(which zsh)" ]; then
 	grep -qxF "$(which zsh)" "/etc/shells" || sudo bash -c "echo $(which zsh) >> /etc/shells"
