@@ -27,6 +27,7 @@ homebrew_packages=(
 
 	# Programming languages
 	"go"
+	"golines"
 	"gofumpt"
 	"fnm"
 	"rust"
