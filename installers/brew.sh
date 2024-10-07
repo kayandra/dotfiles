@@ -23,6 +23,8 @@ homebrew_packages=(
 	"delta"
 	"flyctl"
 	"trivy"
+	"graphviz"
+	"tmux"
 	"k6"
 
 	# Programming languages

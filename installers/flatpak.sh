@@ -10,6 +10,7 @@ flatpak_packages=(
 	"com.spotify.Client"
 	"com.slack.Slack"
 	"com.discordapp.Discord"
+	"org.telegram.desktop"
 	"io.mpv.Mpv"
 	"org.gnome.Geary"
 	"md.obsidian.Obsidian"
