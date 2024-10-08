@@ -26,6 +26,7 @@ homebrew_packages=(
 	"graphviz"
 	"tmux"
 	"k6"
+	"mkcert"
 
 	# Programming languages
 	"go"

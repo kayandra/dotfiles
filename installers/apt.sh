@@ -7,7 +7,8 @@ apt_deps_to_install=(
 	"gnome-tweaks"
 	"cosmic-store"
 	"flatpak"
-	"libmpv1" # mpv video pplayer
+	"libmpv1"       # mpv video pplayer
+	"libnss3-tools" # mkcert
 )
 
 apt_deps_to_remove=(
