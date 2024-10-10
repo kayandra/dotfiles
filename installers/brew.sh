@@ -27,6 +27,7 @@ homebrew_packages=(
 	"tmux"
 	"k6"
 	"mkcert"
+	"go-task/tap/go-task"
 
 	# Programming languages
 	"go"
