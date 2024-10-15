@@ -43,6 +43,16 @@ if [ -d "$HOME/.local/bin" ]; then
 	export PATH="$HOME/.local/bin:$PATH"
 fi
 
+## Add rust cargo's to path
+if [ -d "$HOME/.cargo/bin" ]; then
+	export PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+## Add go pkg's to path
+if [ -d "$HOME/go/bin" ]; then
+	export PATH="$HOME/go/bin:$PATH"
+fi
+
 # Preferred editor for local and remote sessions
 export EDITOR="code"
 
