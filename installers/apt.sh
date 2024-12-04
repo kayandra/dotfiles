@@ -9,6 +9,8 @@ apt_deps_to_install=(
 	"flatpak"
 	"libmpv1"       # mpv video pplayer
 	"libnss3-tools" # mkcert
+	"podman"
+	"lld"
 )
 
 apt_deps_to_remove=(

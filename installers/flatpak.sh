@@ -19,6 +19,7 @@ flatpak_packages=(
 	"dev.geopjr.Calligraphy"
 	"com.redis.RedisInsight"
 	"com.ticktick.TickTick"
+	"io.podman_desktop.PodmanDesktop"
 	"io.defn.Franz" # kafka
 )
 

@@ -28,6 +28,7 @@ homebrew_packages=(
 	"k6"
 	"mkcert"
 	"go-task/tap/go-task"
+	"podman-compose"
 
 	# Programming languages
 	"go"

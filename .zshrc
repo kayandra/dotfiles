@@ -23,6 +23,8 @@ zinit snippet OMZP::common-aliases
 zinit snippet OMZP::git
 zinit snippet OMZP::golang
 zinit snippet OMZP::yarn
+zinit snippet OMZP::docker
+zinit snippet OMZP::docker-compose
 
 zinit light ntnyq/omz-plugin-bun
 zinit light ntnyq/omz-plugin-pnpm
@@ -52,6 +54,9 @@ fi
 if [ -d "$HOME/go/bin" ]; then
 	export PATH="$HOME/go/bin:$PATH"
 fi
+
+# todo(kayandra): research this
+# export NODE_COMPILE_CACHE=~/.cache/nodejs-compile-cache
 
 # Preferred editor for local and remote sessions
 export EDITOR="code"
@@ -94,3 +99,8 @@ eval "$(fnm env --use-on-cd)"
 ### Deferred
 ## =========================================
 alias lt="$FNM_MULTISHELL_PATH/bin/lt" ## this is necessary to override exa's `lt` alias
+
+# bun completions
+[ -s "/home/domo/.bun/_bun" ] && source "/home/domo/.bun/_bun"
+
+export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH

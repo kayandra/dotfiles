@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# todo(kayandra): sudo snap install bluemail
+# todo(kayandra): bruno http client
+
 set -e
 
 # Ensure we are in the dotfiles directory
