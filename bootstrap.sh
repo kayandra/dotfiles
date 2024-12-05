@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# todo(kayandra): sudo snap install bluemail
-# todo(kayandra): bruno http client
-
 set -e
 
 # Ensure we are in the dotfiles directory
@@ -23,15 +20,15 @@ source $(dirname $0)/installers/flatpak.sh
 echo "[[Installing Dependencies]]"
 
 configure_apt
-configure_homebrew
-configure_flatpak
-
 install_apt_packages
-install_homebrew_packages
-install_flatpak_packages
-
 cleanup_apt
+
+configure_homebrew
+install_homebrew_packages
 cleanup_homebrew
+
+configure_flatpak
+install_flatpak_packages
 cleanup_flatpak
 
 echo -e "\nSource brew installed binaries"

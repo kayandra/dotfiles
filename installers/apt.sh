@@ -1,20 +1,25 @@
 #!/usr/bin/env bash
 
 apt_deps_to_install=(
+	"zsh"
+	"curl"
+	"grep"
+	"wget"
+	"git-lfs"
 	"build-essential"
 	"software-properties-common"
 	"gnome-shell-extensions"
 	"gnome-tweaks"
-	"cosmic-store"
+	# "cosmic-store"
 	"flatpak"
-	"libmpv1"       # mpv video pplayer
+	# "libmpv1"       # mpv video pplayer
 	"libnss3-tools" # mkcert
-	"podman"
+	# "podman"
 	"lld"
 )
 
 apt_deps_to_remove=(
-	"pop-shop"
+	# "pop-shop"
 )
 
 configure_apt() {
@@ -26,9 +31,9 @@ configure_apt() {
 install_appimagelauncher() {
 	echo "=> configuring appimagelauncher"
 	if ! is_apt_installed appimagelauncher; then
-		sudo add-apt-repository -yes ppa:appimagelauncher-team/stable
+		sudo add-apt-repository -y ppa:appimagelauncher-team/stable
 		sudo apt update
-		sudo apt install -yes appimagelauncher
+		sudo apt install -y appimagelauncher
 	fi
 }
 
@@ -36,9 +41,9 @@ install_appimagelauncher() {
 install_font_manager() {
 	echo "=> configuring font-manager"
 	if ! is_apt_installed font-manager; then
-		sudo add-apt-repository -yes ppa:font-manager/staging
+		sudo add-apt-repository -y ppa:font-manager/staging
 		sudo apt update
-		sudo apt install -yes font-manager
+		sudo apt install -y font-manager
 	fi
 }
 
@@ -48,7 +53,7 @@ install_apt_packages() {
 	for pkg in "${apt_deps_to_install[@]}"; do
 		echo "=> configuring $pkg"
 		if ! is_apt_installed $pkg; then
-			sudo apt install -yes $pkg
+			sudo apt install -y $pkg
 		fi
 	done
 
@@ -62,7 +67,7 @@ cleanup_apt() {
 	for pkg in "${apt_deps_to_remove[@]}"; do
 		echo "=> removing $pkg"
 		if is_apt_installed $pkg; then
-			sudo apt remove -yes $pkg
+			sudo apt remove -y $pkg
 		fi
 	done
 }

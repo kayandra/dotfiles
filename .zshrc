@@ -71,7 +71,7 @@ export TERM=xterm-256color
 ## Aliases
 ## =========================================
 
-alias ls="exa"  # fancy ls alternative
+alias ls="eza"  # exa is a fancy ls alternative
 alias cat="bat" # fancy cat alternative
 alias zrc="$EDITOR ~/.zshrc"
 

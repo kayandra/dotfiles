@@ -1,13 +1,7 @@
 #!/usr/bin/env bash
 
 homebrew_packages=(
-	"zsh"
-	"curl"
-	"grep"
-	"wget"
 	"stow"
-	"git"
-	"git-lfs"
 	"gcc"
 	"cmake"
 	"pkg-config"
@@ -28,7 +22,7 @@ homebrew_packages=(
 	"k6"
 	"mkcert"
 	"go-task/tap/go-task"
-	"podman-compose"
+	# "podman-compose"
 
 	# Programming languages
 	"go"
