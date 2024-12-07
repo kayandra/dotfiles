@@ -4,6 +4,7 @@ defaultBranch = master
 [user]
 name = kayandra
 email = 5002506+kayandra@users.noreply.github.com
+signingkey = 5521A7972AF9E0DD
 
 [core]
 pager = delta
@@ -24,3 +25,6 @@ required = true
 # Use colors in Git commands that are capable of colored output when
 # outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
 ui = auto
+
+[commit]
+gpgSign = true
