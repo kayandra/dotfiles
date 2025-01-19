@@ -101,6 +101,9 @@ eval "$(fnm env --use-on-cd)"
 alias lt="$FNM_MULTISHELL_PATH/bin/lt" ## this is necessary to override exa's `lt` alias
 
 # bun completions
-[ -s "/home/domo/.bun/_bun" ] && source "/home/domo/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
+
+# Always set docker host
+export DOCKER_HOST=$(docker context inspect | jq -r '.[0].Endpoints.docker.Host')

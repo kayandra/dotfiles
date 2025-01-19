@@ -30,7 +30,7 @@ homebrew_packages=(
 	"gofumpt"
 	"fnm"
 	"rust"
-	"rustfmt"
+	"rustup"
 	"zig"
 )
 
