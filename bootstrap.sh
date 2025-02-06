@@ -34,6 +34,9 @@ cleanup_flatpak
 echo -e "\nSource brew installed binaries"
 eval "$($brewbin shellenv)"
 
+echo -e "\nInstall dnf packages"
+source $(dirname $0)/installers/dnf.sh
+
 echo -e "\nStow dotfiles"
 stow .
 
