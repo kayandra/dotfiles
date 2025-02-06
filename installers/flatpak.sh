@@ -1,26 +1,29 @@
 #!/usr/bin/env bash
 
 flatpak_packages=(
+	"app.zen_browser.zen"
 	"com.brave.Browser"
-	"org.mozilla.firefox"
-	"com.obsproject.Studio"
-	"com.getpostman.Postman"
-	"com.spotify.Client"
-	"com.slack.Slack"
 	"com.discordapp.Discord"
-	"org.telegram.desktop"
-	# "io.mpv.Mpv"
-	"md.obsidian.Obsidian"
-	"org.freedownloadmanager.Manager"
-	"dev.geopjr.Calligraphy"
+	"com.getpostman.Postman"
+	"com.obsproject.Studio"
 	"com.redis.RedisInsight"
-	"io.podman_desktop.PodmanDesktop"
+	"com.skype.Client"
+	"com.slack.Slack"
+	"com.spotify.Client"
+	"com.visualstudio.code"
+	"dev.geopjr.Calligraphy"
 	"io.beekeeperstudio.Studio"
+	"io.mpv.Mpv"
+	"io.podman_desktop.PodmanDesktop"
+	"md.obsidian.Obsidian"
+	"org.chromium.Chromium"
+	"org.freedownloadmanager.Manager"
+	"org.telegram.desktop"
 )
 
 configure_flatpak() {
 	echo -e "\nAdd flathub repository"
-	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+	flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 }
 
 install_flatpak_packages() {

@@ -2,7 +2,7 @@
 
 homebrew_packages=(
 	"zsh"
-	# "stow"
+	"stow"
 	"gcc"
 	"cmake"
 	"pkg-config"
@@ -16,28 +16,16 @@ homebrew_packages=(
 	"zoxide"
 	"fzf"
 	"delta"
-	# "flyctl"
-	# "trivy"
-	# "graphviz"
-	# "tmux"
 	"k6"
 	"mkcert"
-	# "go-task/tap/go-task"
-	# "podman-compose"
 
 	# Programming languages
 	"go"
 	"golines"
 	"gofumpt"
 	"fnm"
-	# "rust"
 	"rustup"
 	"zig"
-)
-
-declare -A homebrew_packages_taps
-homebrew_packages_taps+=(
-	["bun"]="oven-sh/bun"
 )
 
 # Defer brew cleanup
