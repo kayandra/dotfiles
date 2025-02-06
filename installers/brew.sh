@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 homebrew_packages=(
-	"stow"
+	# "stow"
 	"gcc"
 	"cmake"
 	"pkg-config"
@@ -15,13 +15,13 @@ homebrew_packages=(
 	"zoxide"
 	"fzf"
 	"delta"
-	"flyctl"
-	"trivy"
-	"graphviz"
-	"tmux"
+	# "flyctl"
+	# "trivy"
+	# "graphviz"
+	# "tmux"
 	"k6"
 	"mkcert"
-	"go-task/tap/go-task"
+	# "go-task/tap/go-task"
 	# "podman-compose"
 
 	# Programming languages
@@ -29,7 +29,7 @@ homebrew_packages=(
 	"golines"
 	"gofumpt"
 	"fnm"
-	"rust"
+	# "rust"
 	"rustup"
 	"zig"
 )
@@ -72,14 +72,14 @@ install_homebrew_packages() {
 		fi
 	done
 
-	# Install brew casks
-	for key in ${!homebrew_packages_taps[@]}; do
-		echo "=> configuring $key"
-		if ! is_brew_installed $key; then
-			$brewbin tap ${homebrew_packages_taps[${key}]}
-			$brewbin install --force $key
-		fi
-	done
+	# # Install brew casks
+	# for key in ${!homebrew_packages_taps[@]}; do
+	# 	echo "=> configuring $key"
+	# 	if ! is_brew_installed $key; then
+	# 		$brewbin tap ${homebrew_packages_taps[${key}]}
+	# 		$brewbin install --force $key
+	# 	fi
+	# done
 }
 
 cleanup_homebrew() {

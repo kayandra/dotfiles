@@ -3,24 +3,19 @@
 flatpak_packages=(
 	"com.brave.Browser"
 	"org.mozilla.firefox"
-	"com.bitwarden.desktop"
 	"com.obsproject.Studio"
 	"com.getpostman.Postman"
-	"com.raggesilver.BlackBox"
 	"com.spotify.Client"
 	"com.slack.Slack"
 	"com.discordapp.Discord"
 	"org.telegram.desktop"
-	"io.mpv.Mpv"
-	"org.gnome.Geary"
+	# "io.mpv.Mpv"
 	"md.obsidian.Obsidian"
 	"org.freedownloadmanager.Manager"
-	"com.github.johnfactotum.Foliate"
 	"dev.geopjr.Calligraphy"
 	"com.redis.RedisInsight"
-	"com.ticktick.TickTick"
 	"io.podman_desktop.PodmanDesktop"
-	"io.defn.Franz" # kafka
+	"io.beekeeperstudio.Studio"
 )
 
 configure_flatpak() {
