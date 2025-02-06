@@ -1,10 +1,10 @@
 [init]
-defaultBranch = master
+defaultBranch = main
 
 [user]
 name = kayandra
 email = 5002506+kayandra@users.noreply.github.com
-signingkey = 5521A7972AF9E0DD
+signingkey = 853D95A52C8165EA
 
 [core]
 pager = delta
@@ -28,5 +28,6 @@ ui = auto
 
 [commit]
 gpgSign = true
+
 [http]
-	postBuffer = 524288000
+postBuffer = 524288000
