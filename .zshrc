@@ -1,4 +1,12 @@
 ## =========================================
+## Load dependencies
+## =========================================
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+eval "$(starship init zsh)"
+eval "$(zoxide init --cmd cd zsh)"
+eval "$(fnm env --use-on-cd)"
+
+## =========================================
 ## Setup zsh
 ## =========================================
 
@@ -58,14 +66,9 @@ fi
 # todo(kayandra): research this
 # export NODE_COMPILE_CACHE=~/.cache/nodejs-compile-cache
 
-# Preferred editor for local and remote sessions
-export EDITOR="code"
-
-# Don’t clear the screen after quitting a manual page.
-export MANPAGER="less -X"
-
-## kitty
-export TERM=xterm-256color
+export EDITOR="code"       # Preferred editor for local and remote sessions
+export MANPAGER="less -X"  # Don’t clear the screen after quitting a manual page.
+export TERM=xterm-256color # kitty
 
 ## =========================================
 ## Aliases
@@ -79,21 +82,9 @@ alias zrc="$EDITOR ~/.zshrc"
 ## Custom stuffs
 ## =========================================
 
-## Homebrew
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-## Starship prompt
-eval "$(starship init zsh)"
-
-## zoxide
-eval "$(zoxide init --cmd cd zsh)"
-
 ## fzf
 source <(fzf --zsh)
 export FZF_DEFAULT_OPTS="--layout reverse --inline-info"
-
-## fnm
-eval "$(fnm env --use-on-cd)"
 
 ## =========================================
 ### Deferred
@@ -103,6 +94,7 @@ alias lt="$FNM_MULTISHELL_PATH/bin/lt" ## this is necessary to override exa's `l
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
+# pkg-config
 export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
 
 # Always set docker host
