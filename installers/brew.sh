@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 homebrew_packages=(
+	"zsh"
 	# "stow"
 	"gcc"
 	"cmake"
