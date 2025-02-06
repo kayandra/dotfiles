@@ -2,7 +2,7 @@ sudo dnf copr enable jerrycasiano/FontManager
 sudo dnf install font-manager
 
 fnm install v23.7.0
-npm install -g pnpm npm yarn
+#npm install -g pnpm npm yarn
 
 sudo dnf -y install dnf-plugins-core
 sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
