@@ -18,6 +18,7 @@ flatpak_packages=(
 	"md.obsidian.Obsidian"
 	"org.chromium.Chromium"
 	"org.freedownloadmanager.Manager"
+	"org.gnome.Extensions"
 	"org.telegram.desktop"
 )
 
