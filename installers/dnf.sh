@@ -1,5 +1,6 @@
 sudo dnf copr enable jerrycasiano/FontManager
 sudo dnf install font-manager
+sudo dnf install dconf-editor # bring back configuration removed in gnome-tweaks for fedora
 
 fnm install v23.7.0
 #npm install -g pnpm npm yarn

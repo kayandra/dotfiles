@@ -21,10 +21,10 @@ homebrew_packages=(
 
 	# Programming languages
 	"go"
+	"golangci-lint"
 	"golines"
 	"gofumpt"
 	"fnm"
-	"rustup"
 	"zig"
 )
 
