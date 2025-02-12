@@ -53,6 +53,11 @@ if [ -d "$HOME/.local/bin" ]; then
 	export PATH="$HOME/.local/bin:$PATH"
 fi
 
+## prefer go from go.dev/dl
+if [ -d "/usr/local/go/bin" ]; then
+	export PATH="/usr/local/go/bin:$PATH"
+fi
+
 ## Add rust cargo's to path
 if [ -d "$HOME/.cargo/bin" ]; then
 	export PATH="$HOME/.cargo/bin:$PATH"
