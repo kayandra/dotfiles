@@ -53,7 +53,7 @@ if [ -d "$HOME/.local/bin" ]; then
 	export PATH="$HOME/.local/bin:$PATH"
 fi
 
-## prefer go from go.dev/dl
+## prefer go from go.dev/dl when available
 if [ -d "/usr/local/go/bin" ]; then
 	export PATH="/usr/local/go/bin:$PATH"
 fi
