@@ -4,7 +4,7 @@ defaultBranch = main
 [user]
 name = kayandra
 email = 5002506+kayandra@users.noreply.github.com
-signingkey = BF3980A756C6ABAE
+signingkey = 2864080EAF2AA1D9
 
 [core]
 pager = delta

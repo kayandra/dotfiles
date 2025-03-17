@@ -10,7 +10,6 @@ flatpak_packages=(
 	"com.skype.Client"
 	"com.slack.Slack"
 	"com.spotify.Client"
-	"com.visualstudio.code"
 	"dev.geopjr.Calligraphy"
 	"io.beekeeperstudio.Studio"
 	"io.mpv.Mpv"
@@ -18,7 +17,7 @@ flatpak_packages=(
 	"md.obsidian.Obsidian"
 	"org.chromium.Chromium"
 	"org.freedownloadmanager.Manager"
-	"org.gnome.Extensions"
+	# "org.gnome.Extensions"
 	"org.telegram.desktop"
 )
 

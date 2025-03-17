@@ -9,7 +9,7 @@ cd ~/dotfiles
 source $(dirname $0)/installers/common.sh
 
 # Import installers
-# source $(dirname $0)/installers/apt.sh
+source $(dirname $0)/installers/apt.sh
 source $(dirname $0)/installers/brew.sh
 source $(dirname $0)/installers/flatpak.sh
 
@@ -19,9 +19,9 @@ source $(dirname $0)/installers/flatpak.sh
 
 echo "[[Installing Dependencies]]"
 
-# configure_apt
-# install_apt_packages
-# cleanup_apt
+configure_apt
+install_apt_packages
+cleanup_apt
 
 configure_homebrew
 install_homebrew_packages
@@ -34,8 +34,8 @@ cleanup_flatpak
 echo -e "\nSource brew installed binaries"
 eval "$($brewbin shellenv)"
 
-echo -e "\nInstall dnf packages"
-source $(dirname $0)/installers/dnf.sh
+# echo -e "\nInstall dnf packages"
+# source $(dirname $0)/installers/dnf.sh
 
 echo -e "\nStow dotfiles"
 stow .
