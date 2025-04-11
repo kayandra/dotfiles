@@ -3,9 +3,9 @@
 homebrew_packages=(
 	"zsh"
 	"stow"
-	"gcc"
-	"cmake"
-	"pkg-config"
+	# "gcc"
+	# "cmake"
+	# "pkg-config"
 	"ffmpeg"
 	"starship"
 	"cloc"

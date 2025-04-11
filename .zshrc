@@ -71,9 +71,9 @@ fi
 # todo(kayandra): research this
 # export NODE_COMPILE_CACHE=~/.cache/nodejs-compile-cache
 
-export EDITOR="code"       # Preferred editor for local and remote sessions
-export MANPAGER="less -X"  # Don’t clear the screen after quitting a manual page.
-export TERM=xterm-256color # kitty
+export EDITOR="code --wait" # Preferred editor for local and remote sessions
+export MANPAGER="less -X"   # Don’t clear the screen after quitting a manual page.
+export TERM=xterm-256color  # kitty
 
 ## =========================================
 ## Aliases

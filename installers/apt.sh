@@ -8,6 +8,7 @@ apt_deps_to_install=(
 	"build-essential"
 	"software-properties-common"
 	"libnss3-tools" # mkcert
+	"bind9-dnsutils"
 	"lld"
 )
 
@@ -16,7 +17,7 @@ apt_deps_to_remove=()
 configure_apt() {
 	echo -e "\nUpdate apt"
 	sudo apt update # &>/dev/null
-} 
+}
 
 # Install required apt dependencies
 install_apt_packages() {
@@ -26,7 +27,7 @@ install_apt_packages() {
 		if ! is_apt_installed $pkg; then
 			sudo apt install -y $pkg
 		fi
-	done 
+	done
 }
 
 # Remove junk binaries

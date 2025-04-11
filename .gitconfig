@@ -8,6 +8,7 @@ signingkey = 2864080EAF2AA1D9
 
 [core]
 pager = delta
+editor = code --wait
 
 [interactive]
 diffFilter = delta --color-only --features=interactive
@@ -31,3 +32,5 @@ gpgSign = true
 
 [http]
 postBuffer = 524288000
+[rerere]
+enabled = true
