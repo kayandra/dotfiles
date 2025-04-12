@@ -68,6 +68,18 @@ if [ -d "$HOME/go/bin" ]; then
 	export PATH="$HOME/go/bin:$PATH"
 fi
 
+# Check if 'uv' is in PATH; if not, install it
+if ! command -v uv &>/dev/null; then
+	UV_NO_PROFILE_UPDATE=1 curl -LsSf https://astral.sh/uv/install.sh | sh
+fi
+
+# Ensure uv is available by sourcing the env file or updating PATH
+if [ -f "$HOME/.local/bin/env" ]; then
+	source "$HOME/.local/bin/env"
+else
+	export PATH="$HOME/.local/bin:$PATH"
+fi
+
 # todo(kayandra): research this
 # export NODE_COMPILE_CACHE=~/.cache/nodejs-compile-cache
 
