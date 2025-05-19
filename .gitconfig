@@ -4,7 +4,7 @@ defaultBranch = main
 [user]
 name = kayandra
 email = 5002506+kayandra@users.noreply.github.com
-signingkey = 2864080EAF2AA1D9
+signingkey = 957A6B774C88280C
 
 [core]
 pager = delta
@@ -32,5 +32,6 @@ gpgSign = true
 
 [http]
 postBuffer = 524288000
+
 [rerere]
 enabled = true
