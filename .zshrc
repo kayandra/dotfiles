@@ -1,7 +1,7 @@
 ## =========================================
 ## Load dependencies
 ## =========================================
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 eval "$(starship init zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(fnm env --use-on-cd)"
@@ -44,9 +44,14 @@ zinit light zsh-users/zsh-syntax-highlighting
 ## User Config
 ## =========================================
 
-# Prefer NG English and use UTF-8.
-export LANG=en_NG.UTF-8
-export LC_ALL=en_NG.UTF-8
+# Prefer en_NG.UTF-8 if available, else fall back to en_US.UTF-8
+if locale -a 2>/dev/null | grep -q "en_NG.UTF-8"; then
+  export LANG=en_NG.UTF-8
+  export LC_ALL=en_NG.UTF-8
+else
+  export LANG=en_US.UTF-8
+  export LC_ALL=en_US.UTF-8
+fi
 
 ## Add .local/bin to path
 if [ -d "$HOME/.local/bin" ]; then
@@ -118,3 +123,6 @@ export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
 
 # Always set docker host
 export DOCKER_HOST=$(docker context inspect | jq -r '.[0].Endpoints.docker.Host')
+
+# Prevents GPG from hanging...
+export GPG_TTY=$(tty)
