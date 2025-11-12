@@ -44,13 +44,13 @@ zinit light zsh-users/zsh-syntax-highlighting
 ## User Config
 ## =========================================
 
-# Prefer en_NG.UTF-8 if available, else fall back to en_US.UTF-8
-if locale -a 2>/dev/null | grep -q "en_NG.UTF-8"; then
-  export LANG=en_NG.UTF-8
-  export LC_ALL=en_NG.UTF-8
-else
-  export LANG=en_US.UTF-8
-  export LC_ALL=en_US.UTF-8
+# Prefer en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+## source .profile
+if [ -f "$HOME/.profile" ]; then
+	source "$HOME/.profile"
 fi
 
 ## Add .local/bin to path
@@ -126,3 +126,7 @@ export DOCKER_HOST=$(docker context inspect | jq -r '.[0].Endpoints.docker.Host'
 
 # Prevents GPG from hanging...
 export GPG_TTY=$(tty)
+
+# Go setup for Github private repos
+export GOPRIVATE=github.com/bitnob/*,github.com/BaytaCo/*
+

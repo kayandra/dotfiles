@@ -4,7 +4,7 @@ defaultBranch = main
 [user]
 name = kayandra
 email = 5002506+kayandra@users.noreply.github.com
-signingkey = 54C2A7BFD47E930C
+signingkey = 5CD29788C22CF4DD
 
 [core]
 pager = delta
@@ -35,3 +35,9 @@ postBuffer = 524288000
 
 [rerere]
 enabled = true
+
+[gpg]
+program = /opt/homebrew/bin/gpg
+
+[url "git@github.com:"]
+insteadOf = https://github.com/
