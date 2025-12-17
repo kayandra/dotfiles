@@ -13,4 +13,8 @@ description: Create a git commit
 
 ## Your task
 
-Based on the above changes, create a single git commit. Do not include any Co-authored-by in the commit message. Do not include generated with Claude Code in the commit message. Do not include anything at all related to claude in the commit message unless explicitly asked to.
+- Based on the above changes, create a single git commit.
+- Do not include any Co-authored-by in the commit message.
+- Do not include generated with Claude Code in the commit message.
+- Do not include anything at all related to claude in the commit message unless explicitly asked to.
+- Give me a prompt to pick what to do next.
