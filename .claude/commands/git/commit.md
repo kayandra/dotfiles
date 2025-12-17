@@ -9,7 +9,7 @@ description: Create a git commit
 - Current git diff (staged and unstaged changes): !`git diff HEAD`
 - Current branch: !`git branch --show-current`
 - Recent commits: !`git log --oneline -10`
-- Always seek approval before running the git commit command.
+- Always seek approval before running the git commit command. Make it an interactive prompt.
 
 ## Your task
 
@@ -17,4 +17,3 @@ description: Create a git commit
 - Do not include any Co-authored-by in the commit message.
 - Do not include generated with Claude Code in the commit message.
 - Do not include anything at all related to claude in the commit message unless explicitly asked to.
-- Give me a prompt to pick what to do next.
