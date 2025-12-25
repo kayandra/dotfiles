@@ -130,3 +130,5 @@ export GPG_TTY=$(tty)
 # Go setup for Github private repos
 export GOPRIVATE=github.com/bitnob/*,github.com/BaytaCo/*
 
+# Disable turborepo telemetry
+export TURBO_TELEMETRY_DISABLED=1
