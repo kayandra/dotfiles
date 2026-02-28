@@ -3,7 +3,6 @@
 ## =========================================
 # eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 eval "$(starship init zsh)"
-eval "$(zoxide init --cmd cd zsh)"
 eval "$(fnm env --use-on-cd)"
 
 ## =========================================
@@ -132,3 +131,6 @@ export GOPRIVATE=github.com/bitnob/*,github.com/BaytaCo/*
 
 # Disable turborepo telemetry
 export TURBO_TELEMETRY_DISABLED=1
+
+# zoxide (must be at end of .zshrc)
+eval "$(zoxide init --cmd cd zsh)"
