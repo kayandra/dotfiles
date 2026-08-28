@@ -38,6 +38,8 @@ ZSHRC_TOOLS=(
 	jq:jq             # DOCKER_HOST below
 	gh:gh             # github cli
 	stow:stow         # dotfiles
+	cloc:cloc         # count lines of code
+	k6:k6             # load testing
 )
 
 zshrc_install_missing() {
