@@ -1,5 +1,6 @@
 .git
 .gitignore
+\.claude/settings\.local\.json
 
 README.*
 LICENSE.*

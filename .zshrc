@@ -30,6 +30,7 @@ zinit snippet OMZP::common-aliases
 zinit snippet OMZP::git
 zinit snippet OMZP::golang
 zinit snippet OMZP::yarn
+zinit snippet OMZP::kubectl
 zinit snippet OMZP::docker
 zinit snippet OMZP::docker-compose
 
@@ -62,14 +63,14 @@ if [ -d "/usr/local/go/bin" ]; then
 	export PATH="/usr/local/go/bin:$PATH"
 fi
 
-## Add rust cargo's to path
-if [ -d "$HOME/.cargo/bin" ]; then
-	export PATH="$HOME/.cargo/bin:$PATH"
-fi
-
 ## Add go pkg's to path
 if [ -d "$HOME/go/bin" ]; then
 	export PATH="$HOME/go/bin:$PATH"
+fi
+
+## Add rust cargo's to path
+if [ -d "$HOME/.cargo/bin" ]; then
+	export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
 # Check if 'uv' is in PATH; if not, install it
@@ -99,6 +100,12 @@ alias ls="eza"  # exa is a fancy ls alternative
 alias cat="bat" # fancy cat alternative
 alias zrc="$EDITOR ~/.zshrc"
 
+alias c="claude"
+alias cr="claude --resume"
+alias cw="claude --worktree"
+
+alias cx="codex"
+
 ## =========================================
 ## Custom stuffs
 ## =========================================
@@ -119,6 +126,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # pkg-config
 export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
+export PKG_CONFIG_PATH=/opt/homebrew/opt/icu4c/lib/pkgconfig:$PKG_CONFIG_PATH
 
 # Always set docker host
 export DOCKER_HOST=$(docker context inspect | jq -r '.[0].Endpoints.docker.Host')
@@ -132,5 +140,7 @@ export GOPRIVATE=github.com/bitnob/*,github.com/BaytaCo/*
 # Disable turborepo telemetry
 export TURBO_TELEMETRY_DISABLED=1
 
-# zoxide (must be at end of .zshrc)
+## =========================================
+## # zoxide (must be at end of .zshrc)
+## =========================================
 eval "$(zoxide init --cmd cd zsh)"
