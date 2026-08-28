@@ -1,7 +1,15 @@
 ## =========================================
-## Load dependencies
+## Homebrew (macOS) / Linuxbrew (Linux)
 ## =========================================
-# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if [[ "$OSTYPE" == darwin* ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+else
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
+fi
+
+## =========================================
+## Load dependencies (installed via brew)
+## =========================================
 eval "$(starship init zsh)"
 eval "$(fnm env --use-on-cd)"
 
