@@ -40,6 +40,7 @@ ZSHRC_TOOLS=(
 	stow:stow         # dotfiles
 	cloc:cloc         # count lines of code
 	k6:k6             # load testing
+	buf:buf           # protobuf tooling
 )
 
 zshrc_install_missing() {
@@ -75,13 +76,41 @@ command -v fnm &>/dev/null && eval "$(fnm env --use-on-cd)"
 ## =========================================
 ## Language toolchains
 ## =========================================
-## Rust: the official installer, into ~/.cargo/bin (added to PATH below).
+## Rust: the official installer, into ~/.cargo/bin.
 ## brew's rustup formula keeps cargo in its own prefix instead, so not that.
 ## Stable is the global default; a project that needs nightly says so in its
 ## own rust-toolchain.toml and cargo picks it up from there.
 if [[ ! -x "$HOME/.cargo/bin/cargo" ]]; then
 	echo "[zshrc] installing rust (stable)..."
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path --default-toolchain stable
+fi
+export PATH="$HOME/.cargo/bin:$PATH"
+
+## Rust developer CLIs. "command:crate" — install only when the command is
+## missing; --locked uses the dependency versions tested by each release.
+ZSHRC_CARGO_GLOBALS=(
+	just:just
+	bacon:bacon
+	cargo-deny:cargo-deny
+	cargo-machete:cargo-machete
+	cargo-nextest:cargo-nextest
+	cargo-llvm-cov:cargo-llvm-cov
+	cargo-expand:cargo-expand
+	cargo-bloat:cargo-bloat
+	cargo-binstall:cargo-binstall
+	taplo:taplo-cli
+)
+
+if command -v cargo &>/dev/null; then
+	for _cargo_entry in "${ZSHRC_CARGO_GLOBALS[@]}"; do
+		_cargo_cmd="${_cargo_entry%%:*}"
+		_cargo_crate="${_cargo_entry##*:}"
+		if ! command -v "$_cargo_cmd" &>/dev/null; then
+			echo "[zshrc] installing rust CLI: $_cargo_crate"
+			cargo install --locked "$_cargo_crate"
+		fi
+	done
+	unset _cargo_entry _cargo_cmd _cargo_crate
 fi
 
 ## Go: the official tarball from go.dev, into ~/.local/go instead of the
@@ -190,11 +219,6 @@ export LC_ALL=en_US.UTF-8
 ## source .profile
 if [ -f "$HOME/.profile" ]; then
 	source "$HOME/.profile"
-fi
-
-## Add rust cargo's to path
-if [ -d "$HOME/.cargo/bin" ]; then
-	export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
 export EDITOR="code --wait" # Preferred editor for local and remote sessions
