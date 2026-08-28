@@ -10,3 +10,6 @@ Thumbs.db
 .Spotlight-V100
 .Trashes
 .config/kitty/kitty.conf.bak
+.claude/*
+!.claude/settings.json
+!.claude/hooks/

@@ -42,8 +42,9 @@
   "effortLevel": "xhigh",
   "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
-  "theme": "dark-daltonized",
+  "theme": "dark",
   "preferredNotifChannel": "kitty",
+  "agentPushNotifEnabled": true,
   "autoMode": {
     "soft_deny": [
       "$defaults",
@@ -131,5 +132,6 @@
         ]
       }
     ]
-  }
+  },
+  "model": "claude-fable-5[1m]"
 }
