@@ -113,26 +113,15 @@ if ! command -v uv &>/dev/null; then
 	curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
 
-## Node: latest release via fnm, then global npm packages. "command:package".
-ZSHRC_NPM_GLOBALS=(
-	pnpm:pnpm
-	yarn:yarn
-)
+## Node: latest release via fnm, then keep the package managers current.
 if command -v fnm &>/dev/null; then
 	if ! command -v node &>/dev/null; then
 		echo "[zshrc] installing latest node..."
 		fnm install --latest && fnm default latest && fnm use latest
 	fi
-	if command -v npm &>/dev/null; then
-		local_missing=()
-		for entry in "${ZSHRC_NPM_GLOBALS[@]}"; do
-			command -v "${entry%%:*}" &>/dev/null || local_missing+=("${entry##*:}")
-		done
-		if (( ${#local_missing[@]} )); then
-			echo "[zshrc] installing npm globals: ${local_missing[*]}"
-			npm install -g "${local_missing[@]}"
-		fi
-		unset local_missing entry
+	if ! command -v pnpm &>/dev/null; then
+		echo "[zshrc] ensuring npm, yarn, and pnpm are latest..."
+		npm install --global --no-audit --no-fund npm@latest yarn@latest pnpm@latest
 	fi
 fi
 
@@ -143,7 +132,8 @@ if ! command -v claude &>/dev/null; then
 fi
 if ! command -v codex &>/dev/null; then
 	echo "[zshrc] installing codex..."
-	curl -fsSL https://chatgpt.com/codex/install.sh | sh
+	# Install only: suppress prompts such as "Start Codex now? [y/N]".
+	curl -fsSL https://chatgpt.com/codex/install.sh | CODEX_NON_INTERACTIVE=1 sh
 fi
 
 ## =========================================
