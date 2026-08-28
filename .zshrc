@@ -75,9 +75,11 @@ command -v fnm &>/dev/null && eval "$(fnm env --use-on-cd)"
 ## =========================================
 ## Rust: the official installer, into ~/.cargo/bin (added to PATH below).
 ## brew's rustup formula keeps cargo in its own prefix instead, so not that.
+## Stable is the global default; a project that needs nightly says so in its
+## own rust-toolchain.toml and cargo picks it up from there.
 if [[ ! -x "$HOME/.cargo/bin/cargo" ]]; then
-	echo "[zshrc] installing rust..."
-	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+	echo "[zshrc] installing rust (stable)..."
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path --default-toolchain stable
 fi
 
 ## Go: the official tarball from go.dev, into ~/.local/go instead of the
