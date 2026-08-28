@@ -4,7 +4,7 @@ defaultBranch = main
 [user]
 name = kayandra
 email = 5002506+kayandra@users.noreply.github.com
-signingkey = 5CD29788C22CF4DD
+signingkey = ~/.ssh/id_ed25519.pub
 
 [core]
 pager = delta
@@ -28,6 +28,9 @@ required = true
 ui = auto
 
 [commit]
+gpgsign = true
+
+[tag]
 gpgSign = true
 
 [http]
@@ -37,7 +40,10 @@ postBuffer = 524288000
 enabled = true
 
 [gpg]
-program = /opt/homebrew/bin/gpg
+format = ssh
+
+[gpg "ssh"]
+allowedSignersFile = ~/.ssh/allowed_signers
 
 [url "git@github.com:"]
 insteadOf = https://github.com/
