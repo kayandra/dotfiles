@@ -170,6 +170,12 @@ zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 
+# Loading Oh My Zsh through Zinit can leave these tag helpers wrapped in an
+# extra `autoload -X` function frame. Zsh's comptags module tracks tags by call
+# depth, so restore them as native autoloads before initializing completion.
+unfunction _tags _requested _next_label _all_labels 2>/dev/null
+autoload -Uz _tags _requested _next_label _all_labels
+
 # After the plugins, so zsh-completions is on fpath when compinit runs
 autoload -Uz compinit && compinit
 
