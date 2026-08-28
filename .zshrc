@@ -1,23 +1,152 @@
 ## =========================================
 ## Homebrew (macOS) / Linuxbrew (Linux)
 ## =========================================
+## Installs Homebrew if missing, then puts it on PATH. Everything else in this
+## file is installed through it, so this block must run first.
 if [[ "$OSTYPE" == darwin* ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+	BREW_BIN="/opt/homebrew/bin/brew"
 else
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
+	BREW_BIN="/home/linuxbrew/.linuxbrew/bin/brew"
 fi
 
+if [[ ! -x "$BREW_BIN" ]]; then
+	echo "[zshrc] installing homebrew..."
+	if [[ "$OSTYPE" != darwin* ]]; then
+		for dep in curl git gcc; do
+			command -v "$dep" &>/dev/null || echo "[zshrc] linuxbrew needs '$dep' — install it first (apt: build-essential curl git)"
+		done
+	fi
+	NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+[[ -x "$BREW_BIN" ]] && eval "$("$BREW_BIN" shellenv zsh)"
+
 ## =========================================
-## Load dependencies (installed via brew)
+## Tools this file depends on
 ## =========================================
-eval "$(starship init zsh)"
-eval "$(fnm env --use-on-cd)"
+## "command:formula" — the command we check for, and the brew formula that
+## provides it. Only calls brew when something is actually missing, so on a
+## normal shell start this costs a handful of `command -v` lookups.
+ZSHRC_TOOLS=(
+	starship:starship # prompt
+	eza:eza           # ls
+	bat:bat           # cat
+	zoxide:zoxide     # cd
+	fzf:fzf           # fuzzy finder
+	delta:git-delta   # git pager (.gitconfig)
+	git-lfs:git-lfs   # git lfs filter (.gitconfig)
+	jq:jq             # DOCKER_HOST below
+	gh:gh             # github cli
+	stow:stow         # dotfiles
+)
+
+zshrc_install_missing() {
+	command -v brew &>/dev/null || return
+
+	local missing=() entry cmd formula
+	for entry in "${ZSHRC_TOOLS[@]}"; do
+		cmd="${entry%%:*}"
+		formula="${entry##*:}"
+		command -v "$cmd" &>/dev/null || missing+=("$formula")
+	done
+	if (( ${#missing[@]} )); then
+		echo "[zshrc] installing: ${missing[*]}"
+		brew install "${missing[@]}"
+	fi
+}
+zshrc_install_missing
+
+## =========================================
+## Load dependencies
+## =========================================
+## fnm: official installer into ~/.local/share/fnm; --skip-shell so it does
+## not append to this file.
+export PATH="$HOME/.local/share/fnm:$PATH"
+if ! command -v fnm &>/dev/null; then
+	echo "[zshrc] installing fnm..."
+	curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell --force-no-brew --install-dir "$HOME/.local/share/fnm"
+fi
+
+command -v starship &>/dev/null && eval "$(starship init zsh)"
+command -v fnm &>/dev/null && eval "$(fnm env --use-on-cd)"
+
+## =========================================
+## Language toolchains
+## =========================================
+## Rust: the official installer, into ~/.cargo/bin (added to PATH below).
+## brew's rustup formula keeps cargo in its own prefix instead, so not that.
+if [[ ! -x "$HOME/.cargo/bin/cargo" ]]; then
+	echo "[zshrc] installing rust..."
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+fi
+
+## Go: the official tarball from go.dev, into ~/.local/go instead of the
+## documented /usr/local/go so no sudo is needed. Latest version from go.dev.
+export GOROOT="$HOME/.local/go"
+export PATH="$GOROOT/bin:$HOME/go/bin:$PATH"
+if [[ ! -x "$GOROOT/bin/go" ]]; then
+	_go_ver=$(curl -fsSL 'https://go.dev/VERSION?m=text' | head -1)
+	_go_arch=$(uname -m); [[ "$_go_arch" == x86_64 ]] && _go_arch=amd64; [[ "$_go_arch" == aarch64 ]] && _go_arch=arm64
+	_go_os=$([[ "$OSTYPE" == darwin* ]] && echo darwin || echo linux)
+	if [[ -n "$_go_ver" ]]; then
+		echo "[zshrc] installing $_go_ver ($_go_os/$_go_arch)..."
+		mkdir -p "$HOME/.local" \
+			&& curl -fsSL "https://go.dev/dl/${_go_ver}.${_go_os}-${_go_arch}.tar.gz" | tar -C "$HOME/.local" -xzf -
+	fi
+	unset _go_ver _go_arch _go_os
+fi
+
+## Bun: official installer into ~/.bun.
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+if ! command -v bun &>/dev/null; then
+	echo "[zshrc] installing bun..."
+	curl -fsSL https://bun.sh/install | bash
+fi
+
+## uv: official installer into ~/.local/bin.
+export PATH="$HOME/.local/bin:$PATH"
+if ! command -v uv &>/dev/null; then
+	echo "[zshrc] installing uv..."
+	curl -LsSf https://astral.sh/uv/install.sh | sh
+fi
+
+## Node: latest release via fnm, then global npm packages. "command:package".
+ZSHRC_NPM_GLOBALS=(
+	pnpm:pnpm
+	yarn:yarn
+)
+if command -v fnm &>/dev/null; then
+	if ! command -v node &>/dev/null; then
+		echo "[zshrc] installing latest node..."
+		fnm install --latest && fnm default latest && fnm use latest
+	fi
+	if command -v npm &>/dev/null; then
+		local_missing=()
+		for entry in "${ZSHRC_NPM_GLOBALS[@]}"; do
+			command -v "${entry%%:*}" &>/dev/null || local_missing+=("${entry##*:}")
+		done
+		if (( ${#local_missing[@]} )); then
+			echo "[zshrc] installing npm globals: ${local_missing[*]}"
+			npm install -g "${local_missing[@]}"
+		fi
+		unset local_missing entry
+	fi
+fi
+
+## AI CLIs: native installers, into ~/.local/bin.
+if ! command -v claude &>/dev/null; then
+	echo "[zshrc] installing claude..."
+	curl -fsSL https://claude.ai/install.sh | bash
+fi
+if ! command -v codex &>/dev/null; then
+	echo "[zshrc] installing codex..."
+	curl -fsSL https://chatgpt.com/codex/install.sh | sh
+fi
 
 ## =========================================
 ## Setup zsh
 ## =========================================
-
-autoload -Uz compinit && compinit
 
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 # Download Zinit, if it's not there yet
@@ -38,7 +167,6 @@ zinit snippet OMZP::common-aliases
 zinit snippet OMZP::git
 zinit snippet OMZP::golang
 zinit snippet OMZP::yarn
-zinit snippet OMZP::kubectl
 zinit snippet OMZP::docker
 zinit snippet OMZP::docker-compose
 
@@ -47,6 +175,9 @@ zinit light ntnyq/omz-plugin-pnpm
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
+
+# After the plugins, so zsh-completions is on fpath when compinit runs
+autoload -Uz compinit && compinit
 
 ## =========================================
 ## User Config
@@ -61,44 +192,13 @@ if [ -f "$HOME/.profile" ]; then
 	source "$HOME/.profile"
 fi
 
-## Add .local/bin to path
-if [ -d "$HOME/.local/bin" ]; then
-	export PATH="$HOME/.local/bin:$PATH"
-fi
-
-## prefer go from go.dev/dl when available
-if [ -d "/usr/local/go/bin" ]; then
-	export PATH="/usr/local/go/bin:$PATH"
-fi
-
-## Add go pkg's to path
-if [ -d "$HOME/go/bin" ]; then
-	export PATH="$HOME/go/bin:$PATH"
-fi
-
 ## Add rust cargo's to path
 if [ -d "$HOME/.cargo/bin" ]; then
 	export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
-# Check if 'uv' is in PATH; if not, install it
-if ! command -v uv &>/dev/null; then
-	UV_NO_PROFILE_UPDATE=1 curl -LsSf https://astral.sh/uv/install.sh | sh
-fi
-
-# Ensure uv is available by sourcing the env file or updating PATH
-if [ -f "$HOME/.local/bin/env" ]; then
-	source "$HOME/.local/bin/env"
-else
-	export PATH="$HOME/.local/bin:$PATH"
-fi
-
-# todo(kayandra): research this
-# export NODE_COMPILE_CACHE=~/.cache/nodejs-compile-cache
-
 export EDITOR="code --wait" # Preferred editor for local and remote sessions
 export MANPAGER="less -X"   # Don’t clear the screen after quitting a manual page.
-export TERM=xterm-256color  # kitty
 
 ## =========================================
 ## Aliases
@@ -119,8 +219,10 @@ alias cx="codex"
 ## =========================================
 
 ## fzf
-source <(fzf --zsh)
-export FZF_DEFAULT_OPTS="--layout reverse --inline-info"
+if command -v fzf &>/dev/null; then
+	source <(fzf --zsh)
+	export FZF_DEFAULT_OPTS="--layout reverse --inline-info"
+fi
 
 ## =========================================
 ### Deferred
@@ -129,18 +231,17 @@ alias lt="$FNM_MULTISHELL_PATH/bin/lt" ## this is necessary to override exa's `l
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 
 # pkg-config
 export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
 export PKG_CONFIG_PATH=/opt/homebrew/opt/icu4c/lib/pkgconfig:$PKG_CONFIG_PATH
 
-# Always set docker host
-export DOCKER_HOST=$(docker context inspect | jq -r '.[0].Endpoints.docker.Host')
-
-# Prevents GPG from hanging...
-export GPG_TTY=$(tty)
+# Always set docker host (only when docker is present and answers)
+if command -v docker &>/dev/null; then
+	_docker_host=$(docker context inspect 2>/dev/null | jq -r '.[0].Endpoints.docker.Host' 2>/dev/null)
+	[ -n "$_docker_host" ] && [ "$_docker_host" != "null" ] && export DOCKER_HOST="$_docker_host"
+	unset _docker_host
+fi
 
 # Go setup for Github private repos
 export GOPRIVATE=github.com/bitnob/*,github.com/BaytaCo/*
@@ -151,4 +252,4 @@ export TURBO_TELEMETRY_DISABLED=1
 ## =========================================
 ## # zoxide (must be at end of .zshrc)
 ## =========================================
-eval "$(zoxide init --cmd cd zsh)"
+command -v zoxide &>/dev/null && eval "$(zoxide init --cmd cd zsh)"
