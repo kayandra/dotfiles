@@ -25,7 +25,7 @@ The repo is cloned over SSH and commits are signed with the same key, so
 this comes first:
 
 ```bash
-ssh-keygen -t ed25519
+ssh-keygen -t ed25519 -C "5002506+kayandra@users.noreply.github.com"
 echo "5002506+kayandra@users.noreply.github.com namespaces=\"git\" $(cat ~/.ssh/id_ed25519.pub)" > ~/.ssh/allowed_signers
 ```
 
