@@ -183,6 +183,32 @@ if command -v fnm &>/dev/null; then
 	fi
 fi
 
+## Claude writes its plugin cache, sessions and transcripts to ~/.claude. If
+## stow folded that directory into a symlink (it does when ~/.claude did not
+## exist before `stow .`), all of it lands inside the dotfiles repo. Unfold:
+## make ~/.claude a real directory, move everything except skills out of the
+## repo, and link skills back the way stow would.
+zshrc_unfold_claude_dir() {
+	[[ -L "$HOME/.claude" ]] || return 0
+	local target entry
+	target=$(cd "$HOME/.claude" 2>/dev/null && pwd -P) || return 0
+	echo "[zshrc] ~/.claude is a symlink into $target — unfolding so claude state stays out of the repo"
+	unlink "$HOME/.claude" && mkdir -p "$HOME/.claude" || return 1
+	for entry in "$target"/* "$target"/.[!.]*; do
+		[[ -e "$entry" ]] || continue
+		[[ "${entry:t}" == skills ]] && continue
+		mv "$entry" "$HOME/.claude/"
+	done
+	if [[ -d "$target/skills" ]]; then
+		if [[ "${target:h:h}" == "$HOME" ]]; then
+			ln -s "../${target:h:t}/.claude/skills" "$HOME/.claude/skills" # relative, as stow makes it
+		else
+			ln -s "$target/skills" "$HOME/.claude/skills"
+		fi
+	fi
+}
+zshrc_unfold_claude_dir
+
 ## AI CLIs: native installers, into ~/.local/bin.
 if ! command -v claude &>/dev/null; then
 	echo "[zshrc] installing claude..."
