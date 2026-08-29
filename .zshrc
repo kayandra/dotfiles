@@ -235,13 +235,21 @@ ZSHRC_CLAUDE_PLUGINS=(
 	pyright-lsp
 )
 if command -v claude &>/dev/null; then
+	_plugins_missing=()
 	for _plugin in "${ZSHRC_CLAUDE_PLUGINS[@]}"; do
-		if [[ ! -d "$HOME/.claude/plugins/cache/claude-plugins-official/$_plugin" ]]; then
+		[[ -d "$HOME/.claude/plugins/cache/claude-plugins-official/$_plugin" ]] || _plugins_missing+=("$_plugin")
+	done
+	if (( ${#_plugins_missing[@]} )); then
+		# A fresh machine has no local copy of the marketplace, and a stale one
+		# does not know about newer plugins; either way install says "not found".
+		echo "[zshrc] updating claude plugin marketplace..."
+		claude plugin marketplace update claude-plugins-official
+		for _plugin in "${_plugins_missing[@]}"; do
 			echo "[zshrc] installing claude plugin: $_plugin"
 			claude plugin install -y -s user "$_plugin@claude-plugins-official"
-		fi
-	done
-	unset _plugin
+		done
+	fi
+	unset _plugin _plugins_missing
 fi
 
 ## =========================================
