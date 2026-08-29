@@ -86,6 +86,28 @@ if [[ ! -x "$HOME/.cargo/bin/cargo" ]]; then
 fi
 export PATH="$HOME/.cargo/bin:$PATH"
 
+## Extra rustup components: rust-analyzer for the rust-analyzer-lsp claude
+## plugin, rust-src so it can see into std, llvm-tools for cargo-llvm-cov.
+## ~/.cargo/bin has proxies whether or not a component is installed, so ask
+## rustup rather than checking for a command.
+ZSHRC_RUSTUP_COMPONENTS=(
+	rust-analyzer
+	rust-src
+	llvm-tools
+)
+if command -v rustup &>/dev/null; then
+	_rust_installed=$(rustup component list --installed 2>/dev/null)
+	_rust_missing=()
+	for _c in "${ZSHRC_RUSTUP_COMPONENTS[@]}"; do
+		grep -q "^$_c" <<<"$_rust_installed" || _rust_missing+=("$_c")
+	done
+	if (( ${#_rust_missing[@]} )); then
+		echo "[zshrc] installing rustup components: ${_rust_missing[*]}"
+		rustup component add "${_rust_missing[@]}"
+	fi
+	unset _rust_installed _rust_missing _c
+fi
+
 ## Rust developer CLIs. "command:crate" — install only when the command is
 ## missing; --locked uses the dependency versions tested by each release.
 ZSHRC_CARGO_GLOBALS=(
@@ -154,6 +176,11 @@ if command -v fnm &>/dev/null; then
 		echo "[zshrc] ensuring npm, yarn, and pnpm are latest..."
 		npm install --global --no-audit --no-fund npm@latest yarn@latest pnpm@latest
 	fi
+	## Language servers for the typescript-lsp and pyright-lsp claude plugins.
+	if command -v npm &>/dev/null && { ! command -v typescript-language-server &>/dev/null || ! command -v pyright &>/dev/null; }; then
+		echo "[zshrc] installing typescript and python language servers..."
+		npm install --global --no-audit --no-fund typescript typescript-language-server pyright
+	fi
 fi
 
 ## AI CLIs: native installers, into ~/.local/bin.
@@ -165,6 +192,29 @@ if ! command -v codex &>/dev/null; then
 	echo "[zshrc] installing codex..."
 	# Install only: suppress prompts such as "Start Codex now? [y/N]".
 	curl -fsSL https://chatgpt.com/codex/install.sh | CODEX_NON_INTERACTIVE=1 sh
+fi
+
+## Claude plugins from the official marketplace, user scope. Installed
+## plugins live in ~/.claude/plugins (not in the dotfiles), so install any
+## that are missing. Auth for the MCP-backed ones is a one-time /mcp login.
+ZSHRC_CLAUDE_PLUGINS=(
+	slack
+	linear
+	chrome-devtools-mcp
+	gopls-lsp
+	clangd-lsp
+	rust-analyzer-lsp
+	typescript-lsp
+	pyright-lsp
+)
+if command -v claude &>/dev/null; then
+	for _plugin in "${ZSHRC_CLAUDE_PLUGINS[@]}"; do
+		if [[ ! -d "$HOME/.claude/plugins/cache/claude-plugins-official/$_plugin" ]]; then
+			echo "[zshrc] installing claude plugin: $_plugin"
+			claude plugin install -y -s user "$_plugin@claude-plugins-official"
+		fi
+	done
+	unset _plugin
 fi
 
 ## =========================================
