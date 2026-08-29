@@ -39,9 +39,13 @@ shell:
 
 ```bash
 git clone git@github.com:kayandra/dotfiles.git ~/dotfiles
+mkdir -p ~/.claude
 cd ~/dotfiles && stow .
 chsh -s "$(which zsh)"
 ```
+
+`mkdir ~/.claude` first, or stow links the whole directory and Claude Code
+then writes its cache and session files into the repo.
 
 Open a new terminal. The first one takes a few minutes while the tools and
 the zsh plugins install.

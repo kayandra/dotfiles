@@ -11,5 +11,4 @@ Thumbs.db
 .Trashes
 .config/kitty/kitty.conf.bak
 .claude/*
-!.claude/settings.json
-!.claude/hooks/
+!.claude/skills/
