@@ -240,10 +240,15 @@ if command -v claude &>/dev/null; then
 		[[ -d "$HOME/.claude/plugins/cache/claude-plugins-official/$_plugin" ]] || _plugins_missing+=("$_plugin")
 	done
 	if (( ${#_plugins_missing[@]} )); then
-		# A fresh machine has no local copy of the marketplace, and a stale one
-		# does not know about newer plugins; either way install says "not found".
-		echo "[zshrc] updating claude plugin marketplace..."
-		claude plugin marketplace update claude-plugins-official
+		# A fresh machine has no marketplaces at all, so add the official one;
+		# an existing copy may be stale and not know newer plugins, so update it.
+		if claude plugin marketplace list 2>/dev/null | grep -q 'claude-plugins-official'; then
+			echo "[zshrc] updating claude plugin marketplace..."
+			claude plugin marketplace update claude-plugins-official
+		else
+			echo "[zshrc] adding claude plugin marketplace..."
+			claude plugin marketplace add anthropics/claude-plugins-official
+		fi
 		for _plugin in "${_plugins_missing[@]}"; do
 			echo "[zshrc] installing claude plugin: $_plugin"
 			claude plugin install -y -s user "$_plugin@claude-plugins-official"
