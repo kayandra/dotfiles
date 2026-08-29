@@ -210,7 +210,7 @@ zshrc_unfold_claude_dir() {
 }
 zshrc_unfold_claude_dir
 
-## AI CLIs: native installers, into ~/.local/bin.
+## AI CLIs: native installers.
 if ! command -v claude &>/dev/null; then
 	echo "[zshrc] installing claude..."
 	curl -fsSL https://claude.ai/install.sh | bash
@@ -219,6 +219,11 @@ if ! command -v codex &>/dev/null; then
 	echo "[zshrc] installing codex..."
 	# Install only: suppress prompts such as "Start Codex now? [y/N]".
 	curl -fsSL https://chatgpt.com/codex/install.sh | CODEX_NON_INTERACTIVE=1 sh
+fi
+export PATH="$HOME/.strix/bin:$PATH"
+if ! command -v strix &>/dev/null; then
+	echo "[zshrc] installing strix..."
+	curl -sSL https://strix.ai/install | bash
 fi
 
 ## Claude plugins from the official marketplace, user scope. Installed
