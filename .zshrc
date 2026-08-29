@@ -360,10 +360,7 @@ if command -v docker &>/dev/null; then
 	_docker_host=$(docker context inspect 2>/dev/null | jq -r '.[0].Endpoints.docker.Host' 2>/dev/null)
 	[ -n "$_docker_host" ] && [ "$_docker_host" != "null" ] && export DOCKER_HOST="$_docker_host"
 	unset _docker_host
-fi
-
-# Go setup for Github private repos
-export GOPRIVATE=github.com/bitnob/*,github.com/BaytaCo/*
+fi 
 
 # Disable turborepo telemetry
 export TURBO_TELEMETRY_DISABLED=1
