@@ -194,8 +194,9 @@ zshrc_unfold_claude_dir() {
 	target=$(cd "$HOME/.claude" 2>/dev/null && pwd -P) || return 0
 	echo "[zshrc] ~/.claude is a symlink into $target — unfolding so claude state stays out of the repo"
 	unlink "$HOME/.claude" && mkdir -p "$HOME/.claude" || return 1
-	for entry in "$target"/* "$target"/.[!.]*; do
-		[[ -e "$entry" ]] || continue
+	# (N): a pattern with no matches expands to nothing instead of aborting
+	# the loop, which zsh does by default and bash does not.
+	for entry in "$target"/*(N) "$target"/.[!.]*(N); do
 		[[ "${entry:t}" == skills ]] && continue
 		mv "$entry" "$HOME/.claude/"
 	done
