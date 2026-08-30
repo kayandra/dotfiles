@@ -121,7 +121,7 @@ ZSHRC_CARGO_GLOBALS=(
 	cargo-bloat:cargo-bloat
 	cargo-binstall:cargo-binstall
 	taplo:taplo-cli
-	typst:typst
+	typst:typst-cli
 )
 
 if command -v cargo &>/dev/null; then
