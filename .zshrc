@@ -317,9 +317,13 @@ if [ -f "$HOME/.profile" ]; then
 	source "$HOME/.profile"
 fi
 
+## Android SDK
 if [[ "$OSTYPE" == darwin* ]]; then
 	export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
+	export ANDROID_HOME="$HOME/Library/Android/sdk"
+	export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"
 fi
+
 export EDITOR="code --wait" # Preferred editor for local and remote sessions
 export MANPAGER="less -X"   # Don’t clear the screen after quitting a manual page.
 
